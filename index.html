@@ -679,6 +679,14 @@
         document.body.className = storedTheme === 'dark' ? 'dark-mode' : 'light-mode';
         updateThemeIcons(storedTheme === 'dark');
       }
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      const newColorScheme = e.matches ? 'dark' : 'light';
+        document.body.className = newColorScheme === 'dark' ? 'dark-mode' : 'light-mode';
+        localStorage.setItem('theme', newColorScheme);
+        updateThemeIcons(newColorScheme === 'dark');
+      });
+
       
       // Theme toggle functionality
       const themeToggle = document.getElementById('theme-toggle');
