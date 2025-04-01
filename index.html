@@ -352,7 +352,7 @@
   <!-- Navigation -->
   <nav class="navbar fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
     <div class="flex items-center space-x-4">
-      <div class="hidden md:block font-medium">Personal Portfolio</div>
+      <div class="hidden md:block font-medium"></div>
     </div>
     
     <div class="hidden md:flex items-center space-x-8">
@@ -461,11 +461,11 @@
           </div>
           <div class="flex items-center space-x-4">
             <i class="fas fa-envelope text-black-500"></i>
-            <span>alex@carringtonalex.com</span>
+            <a href="mailto:alex@carringtonalex.com"><span>alex@carringtonalex.com</span></a>
           </div>
           <div class="flex items-center space-x-4">
             <i class="fas fa-phone text-black-500"></i>
-            <span>+46(0)76-230 59 19</span>
+            <a href="tel:+46762305919"><span>+46(0)76-230 59 19</span></a>
           </div>
         </div>
       </div>
@@ -480,8 +480,10 @@
       <div class="card p-6 md:p-8">
         <h3 class="text-2xl font-bold mb-4">The Friday Project</h3>
         <p class="mb-6 text-lg">
-          A weekly experimental project that explores new technologies and design approaches.
-          Each Friday, I build something new to expand my skills and test creative concepts.
+          Developed a custom AI assistant using  Machine Learning and Flask, that can handles 
+          TTS, object detection, face recognition, text, calls and more integrated with Google
+          and many other API's for real-time learning, and secured via Cloudflare Tunnel, CSP 
+          headers, rate limits, and isolated user environments and Google OAuth2.0.
         </p>
         
         <div class="mb-6">
@@ -491,67 +493,101 @@
             <a href="https://en.wikipedia.org/wiki/HTML5" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">HTML5</a>
             <a href="https://en.wikipedia.org/wiki/JavaScript" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JavaScript</a>
             <a href="https://en.wikipedia.org/wiki/CSS" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">CSS</a>
-            <a href="https://en.wikipedia.org/wiki/JSON" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JSON</a>            
+            <a href="https://en.wikipedia.org/wiki/JSON" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JSON</a>    
+            <a href="https://en.wikipedia.org/wiki/TensorFlow" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">Tensorflow</a>         
           </div>
         </div>
       </div>
     </div>
   </section>
   
-  <!-- Skills Section -->
-  <section id="skills" class="py-20 md:py-32 px-6 md:px-12">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold mb-12">Skills</h2>
-      
-      <div class="mb-16">
-        <h3 class="text-2xl font-bold mb-8">Languages I Know</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fab fa-js text-4xl mb-4 text-yellow-500"></i>
-            <span class="font-medium">JavaScript</span>
-          </div>
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fab fa-python text-4xl mb-4 text-blue-500"></i>
-            <span class="font-medium">Python</span>
-          </div>
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fab fa-html5 text-4xl mb-4 text-orange-500"></i>
-            <span class="font-medium">HTML5</span>
-          </div>
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fas fa-code text-4xl mb-4 text-purple-500"></i>
-            <span class="font-medium">C++</span>
-          </div>
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fas fa-hashtag text-4xl mb-4 text-green-500"></i>
-            <span class="font-medium">C#</span>
-          </div>
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fab fa-node-js text-4xl mb-4 text-green-600"></i>
-            <span class="font-medium">Node.js</span>
-          </div>
+<!-- Skills Section -->
+<section id="skills" class="py-20 md:py-32 px-6 md:px-12">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold mb-12">Skills</h2>
+
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold mb-8">Languages I Know</h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <!-- Languages -->
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-js text-4xl mb-4 text-yellow-500"></i>
+          <span class="font-medium">JavaScript</span>
         </div>
-      </div>
-      
-      <div>
-        <h3 class="text-2xl font-bold mb-8">Tools & Platforms I Use</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fab fa-aws text-4xl mb-4 text-orange-400"></i>
-            <span class="font-medium">Amazon Web Services</span>
-          </div>
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fas fa-robot text-4xl mb-4 text-blue-400"></i>
-            <span class="font-medium">Google Cloud Platform</span>
-          </div>
-          <div class="skill-card p-6 flex flex-col items-center text-center">
-            <i class="fab fa-microsoft text-4xl mb-4 text-blue-500"></i>
-            <span class="font-medium">Microsoft Azure</span>
-          </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-python text-4xl mb-4 text-blue-500"></i>
+          <span class="font-medium">Python</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-html5 text-4xl mb-4 text-orange-500"></i>
+          <span class="font-medium">HTML5</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fas fa-code text-4xl mb-4 text-purple-500"></i>
+          <span class="font-medium">C++</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fas fa-hashtag text-4xl mb-4 text-green-500"></i>
+          <span class="font-medium">C#</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-node-js text-4xl mb-4 text-green-600"></i>
+          <span class="font-medium">Node.js</span>
         </div>
       </div>
     </div>
-  </section>
+
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold mb-8">Tools & Platforms I Use</h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <!-- Tools -->
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-aws text-4xl mb-4 text-orange-400"></i>
+          <span class="font-medium">AWS</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fas fa-robot text-4xl mb-4 text-blue-400"></i>
+          <span class="font-medium">Google Claude</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-microsoft text-4xl mb-4 text-blue-500"></i>
+          <span class="font-medium">Microsoft Azure</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold mb-8">OS & System Knowledge</h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <!-- OS & System -->
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-apple text-4xl mb-4 text-gray-700"></i>
+          <span class="font-medium">macOS</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-windows text-4xl mb-4 text-blue-600"></i>
+          <span class="font-medium">Windows</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-linux text-4xl mb-4 text-yellow-600"></i>
+          <span class="font-medium">Ubuntu/Linux</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fab fa-github text-4xl mb-4 text-purple-700"></i>
+          <span class="font-medium">GitHub</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fas fa-terminal text-4xl mb-4 text-green-700"></i>
+          <span class="font-medium">SSH</span>
+        </div>
+        <div class="skill-card p-6 flex flex-col items-center text-center">
+          <i class="fas fa-desktop text-4xl mb-4 text-indigo-600"></i>
+          <span class="font-medium">RDP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
   
   <!-- Contact Section -->
   <section id="contact" class="py-20 md:py-32 px-6 md:px-12">
@@ -604,30 +640,6 @@
           
           <button type="submit" class="btn-primary">Send Message</button>
         </form>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Newsletter -->
-  <section class="py-20 px-6 md:px-12 bg-opacity-5">
-    <div class="max-w-6xl mx-auto">
-      <div class="card p-8 md:p-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h3 class="text-2xl font-bold mb-4">Stay Updated</h3>
-            <p class="mb-6">
-              Subscribe to my newsletter to receive updates on my latest projects, 
-              tech insights, and occasional coding tips.
-            </p>
-          </div>
-          
-          <div>
-            <form class="flex flex-col sm:flex-row gap-4">
-              <input type="email" placeholder="your@email.com" class="flex-grow px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              <button type="submit" class="btn-primary whitespace-nowrap">Subscribe</button>
-            </form>
-          </div>
-        </div>
       </div>
     </div>
   </section>
