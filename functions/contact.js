@@ -19,7 +19,7 @@ export async function onRequestPost({ request, env }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "onboarding@resend.dev", // or your verified sender
+        from: "onboarding@carringtonalex.com", // or your verified sender
         to: "ggsweeden00@gmail.com",   // your own inbox
         subject: "New Contact Form Submission",
         html: `
