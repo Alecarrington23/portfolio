@@ -3,885 +3,1468 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alex Carrington Portfolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <title>Alex Carrington | Developer Portfolio</title>
+  <!-- TailwindCSS CDN (place before your custom styles to override if needed) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-
   <style>
-    /* Base Styles */
+    /* Base Styles & Variables */
     :root {
-      --background-light: #f8f9fa;
-      --text-light: #333;
-      --background-dark: #121212;
-      --text-dark: #f1f1f1;
-      --accent: #0074e4;
-      --accent-hover: #0056b3;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --bg-light: #f7f7f7;
+      --text-light: #333333;
+      --bg-dark: #121212;
+      --text-dark: #f0f0f0;
+      --accent: #3f9c9c;
+      --accent-hover: #3f9c9c;
+      --transition: all 0.3s ease;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --border-radius: 8px;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: var(--bg-light);
+      --text-primary: var(--text-light);
+      --bg-secondary: #ffffff;
+      --text-secondary: #555555;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: var(--bg-dark);
+      --text-primary: var(--text-dark);
+      --bg-secondary: #1e1e1e;
+      --text-secondary: #b0b0b0;
+    }
+
+    /* Reset & Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "SF Pro", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
-      font-family: "SF Pro Display", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      transition: background-color 0.5s ease, color 0.5s ease;
-      scroll-behavior: smooth;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: var(--transition);
       overflow-x: hidden;
     }
 
-    .light-mode {
-      background-color: var(--background-light);
-      color: var(--text-light);
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      line-height: 1.2;
     }
 
-    .dark-mode {
-      background-color: var(--background-dark);
-      color: var(--text-dark);
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: -0.025em;
     }
 
-    /* Navbar */
-    .navbar {
+    h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, var(--accent), #00a1ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      line-height: 1.7;
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+    }
+
+    section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), #2b8fff);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 102, 255, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 102, 255, 0.4);
+      color: white;
+    }
+
+    /* Header Styles */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: rgba(var(--bg-primary), 0.8);
       transition: var(--transition);
-    }
-
-    .dark-mode .navbar {
-      background-color: rgba(18, 18, 18, 0.8);
-    }
-
-    .light-mode .navbar {
-      background-color: rgba(255, 255, 255, 0.8);
-    }
-
-    /* Custom Button Styles */
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #00a8ff);
-      color: white;
-      border-radius: 8px;
-      padding: 0.75rem 1.5rem;
-      transition: var(--transition);
-      box-shadow: 0 4px 14px rgba(0, 116, 228, 0.2);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 116, 228, 0.3);
-    }
-
-    /* Section Styles */
-    section {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Card Styles */
-    .card {
-      border-radius: 12px;
-      overflow: hidden;
-      transition: var(--transition);
-    }
-
-    .dark-mode .card {
-      background-color: #1e1e1e;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .light-mode .card {
-      background-color: white;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    /* Language & Tool Cards */
-    .skill-card {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: var(--transition);
-      cursor: pointer;
-    }
-
-    .skill-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .dark-mode .skill-card {
-      background-color: #1e1e1e;
-    }
-
-    .light-mode .skill-card {
-      background-color: white;
-    }
-
-    /* Toggle Switch */
-    .theme-switch {
-      position: relative;
-      width: 60px;
-      height: 30px;
-      border-radius: 15px;
+      height: 80px;
       display: flex;
       align-items: center;
+    }
+
+    header.scrolled {
+      box-shadow: var(--shadow);
+      height: 60px;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.05em;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      position: relative;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: var(--transition);
+    }
+
+    nav ul li a:hover::after, 
+    nav ul li a.active::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .hamburger .bar {
+      display: block;
+      width: 25px;
+      height: 3px;
+      margin: 5px auto;
+      transition: var(--transition);
+      background-color: var(--text-primary);
+      border-radius: 3px;
+    }
+
+    /* Theme Toggler */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
       cursor: pointer;
       transition: var(--transition);
+      position: relative;
+      box-shadow: var(--shadow);
     }
 
-    .dark-mode .theme-switch {
-      background-color: #333;
-      justify-content: flex-end;
-    }
-
-    .light-mode .theme-switch {
-      background-color: #ddd;
-      justify-content: flex-start;
-    }
-
-    .switch-handle {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      margin: 0 3px;
+    .theme-toggle i {
+      font-size: 1.2rem;
+      color: var(--text-primary);
       transition: var(--transition);
     }
 
-    .dark-mode .switch-handle {
-      background-color: #121212;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-    }
-
-    .light-mode .switch-handle {
-      background-color: white;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    .theme-toggle:hover {
+      transform: scale(1.05);
     }
 
     /* Hero Section */
     .hero {
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       align-items: center;
       position: relative;
       overflow: hidden;
     }
 
-    .hero-bg {
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-subtitle {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero h1 {
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      max-width: 600px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .language-flags {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .language-flags span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .flag {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .three-canvas {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
+      z-index: 0;
     }
 
-    .dark-mode .hero-bg {
-      background: radial-gradient(circle at 80% 20%, #1a1a1a 0%, #121212 100%);
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
     }
 
-    .light-mode .hero-bg {
-      background: radial-gradient(circle at 80% 20%, #ffffff 0%, #f0f0f0 100%);
+    .about-image {
+      width: 100;
+      height: auto;
+      background-color: var(--bg-secondary);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    /* Code Block */
-    .code-block {
-      border-radius: 8px;
-      padding: 20px;
-      font-family: "Menlo", "Monaco", "Courier New", monospace;
-      font-size: 14px;
-      line-height: 1.5;
-      overflow-x: auto;
+    .about-text {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      background-color: var(--bg-secondary);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
       transition: var(--transition);
     }
 
-    .dark-mode .code-block {
-      background-color: #1a1a1a;
-      color: #e6e6e6;
+    .stat-item:hover {
+      transform: translateY(-5px);
     }
 
-    .light-mode .code-block {
-      background-color: #f5f5f5;
-      color: #333;
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--accent), #00a1ff);
+      background-clip: text; 
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    /* Custom Monogram */
-    .monogram {
-      width: 50px;
-      height: 50px;
-      border-radius: 25%;
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Project Section */
+    .project-section {
+      background-color: var(--bg-secondary);
+    }
+
+    .project-card {
+      background-color: var(--bg-primary);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .project-content {
+      padding: 2rem;
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .tech-badge {
+      padding: 0.4rem 0.8rem;
+      background-color: rgba(var(--accent), 0.1);
+      color: var(--accent);
+      border-radius: var(--border-radius);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* Skills Section */
+    .skills-container {
+      margin-top: 3rem;
+    }
+
+    .skills-title {
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .skill-card {
+      background-color: var(--bg-secondary);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      opacity: 0;
+      transform: translateY(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .skill-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .skill-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .skill-level {
+      width: 100%;
+      height: 6px;
+      background-color: rgba(var(--accent), 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #00a1ff);
+      border-radius: 3px;
+      width: 0;
+      transition: width 1s ease;
+    }
+
+    /* Contact Section */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .contact-info {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-icon {
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
-      font-size: 24px;
+      background-color: rgba(var(--accent), 0.1);
+      color: var(--accent);
+      border-radius: 50%;
+      font-size: 1.2rem;
+    }
+
+    .contact-text h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-text p {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      border-radius: 50%;
+      font-size: 1.2rem;
       transition: var(--transition);
     }
 
-    .dark-mode .monogram {
-      background: linear-gradient(135deg, var(--accent), #00a8ff);
+    .social-link:hover {
+      background-color: var(--accent);
       color: white;
+      transform: translateY(-5px);
     }
 
-    .light-mode .monogram {
-      background: linear-gradient(135deg, var(--accent), #00a8ff);
-      color: white;
-    }
-
-    /* Flag Icons */
-    .flag-icon {
-      width: 24px;
-      height: 16px;
-      display: inline-block;
-      margin-right: 8px;
-      border-radius: 2px;
-    }
-
-    /* Mobile Navigation */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 80%;
-      height: 100vh;
-      z-index: 50;
-      transition: right 0.3s ease-in-out;
-    }
-
-    .mobile-menu.active {
-      right: 0;
-    }
-
-    .dark-mode .mobile-menu {
-      background-color: #1a1a1a;
-    }
-
-    .light-mode .mobile-menu {
-      background-color: #f8f9fa;
-    }
-
-    /* Hamburger Menu */
-    .hamburger {
-      width: 30px;
-      height: 20px;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .hamburger span {
-      display: block;
-      position: absolute;
-      height: 2px;
-      width: 100%;
-      border-radius: 2px;
-      opacity: 1;
-      left: 0;
-      transform: rotate(0deg);
-      transition: .25s ease-in-out;
-    }
-
-    .light-mode .hamburger span {
-      background: var(--text-light);
-    }
-
-    .dark-mode .hamburger span {
-      background: var(--text-dark);
-    }
-
-    .hamburger span:nth-child(1) {
-      top: 0px;
-    }
-
-    .hamburger span:nth-child(2) {
-      top: 9px;
-    }
-
-    .hamburger span:nth-child(3) {
-      top: 18px;
-    }
-
-    .hamburger.active span:nth-child(1) {
-      top: 9px;
-      transform: rotate(135deg);
-    }
-
-    .hamburger.active span:nth-child(2) {
+    /* Contact Form */
+    .contact-form {
+      background-color: var(--bg-secondary);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
       opacity: 0;
-      left: -60px;
+      transform: translateY(20px);
     }
 
-    .hamburger.active span:nth-child(3) {
-      top: 9px;
-      transform: rotate(-135deg);
+    .form-group {
+      margin-bottom: 1.5rem;
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid rgba(var(--text-primary), 0.1);
+      border-radius: var(--border-radius);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: var(--transition);
     }
 
-    .dark-mode::-webkit-scrollbar-track {
-      background: #1a1a1a;
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(var(--accent), 0.2);
     }
 
-    .light-mode::-webkit-scrollbar-track {
-      background: #f1f1f1;
+    textarea.form-control {
+      resize: vertical;
+      min-height: 150px;
     }
 
-    .dark-mode::-webkit-scrollbar-thumb {
-      background: #333;
-      border-radius: 4px;
+    /* Footer */
+    footer {
+      background-color: var(--bg-secondary);
+      padding: 3rem 0;
     }
 
-    .light-mode::-webkit-scrollbar-thumb {
-      background: #ccc;
-      border-radius: 4px;
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent);
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .footer-link {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .footer-credits {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 1rem;
+    }
+
+    /* Media Queries */
+    @media (max-width: 992px) {
+      .about-content,
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .about-image {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: 4rem 0;
+      }
+
+      nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 250px;
+        height: 100vh;
+        background-color: var(--bg-secondary);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      nav ul.active {
+        right: 0;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+    }
+
+    /* Animation Classes */
+    .fade-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal {
+      position: relative;
+      transform: translateY(50px);
+      opacity: 0;
+      transition: all 0.6s ease;
+    }
+
+    .reveal.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Cursor */
+    .custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: rgba(var(--accent), 0.5);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
     }
   </style>
 </head>
-<body class="light-mode">
-  <!-- Navigation -->
-  <nav class="navbar fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
-    <div class="flex items-center space-x-4">
-      <div class="hidden md:block font-medium"></div>
-    </div>
+<!-- Music Player Bar -->
+<div id="music-bar" class="fixed bottom-0 left-0 w-full backdrop-blur-md bg-black/40 dark:bg-white/10 text-white dark:text-white px-6 py-3 z-50">
+  <div class="flex items-center justify-between max-w-5xl mx-auto">
     
-    <div class="hidden md:flex items-center space-x-8">
-      <a href="#about" class="hover:text-blue-500 transition-colors">About</a>
-      <a href="#work" class="hover:text-blue-500 transition-colors">Work</a>
-      <a href="#skills" class="hover:text-blue-500 transition-colors">Skills</a>
-      <a href="#contact" class="hover:text-blue-500 transition-colors">Contact</a>
-      
-      <div class="theme-switch ml-4" id="theme-toggle">
-        <div class="switch-handle flex items-center justify-center">
-          <i class="fas fa-sun text-yellow-500 light-icon"></i>
-          <i class="fas fa-moon text-blue-300 dark-icon hidden"></i>
-        </div>
+    <!-- Play/Pause Button -->
+    <button id="playPauseBtn" class="text-2xl">
+      <i id="playPauseIcon" class="fas fa-pause"></i>
+    </button>
+
+    <!-- Title and Timestamps -->
+    <div class="flex-1 px-6 text-center">
+      <div class="text-sm font-semibold text-white dark:text-white">
+        <a href="https://www.youtube.com/watch?v=pxPWEudVo3M&t=22s" target="_blank" rel="noopener noreferrer" class="font-bold hover:underline">
+          No Copyright Music Playlist - 20 Minutes Lofi Hip Hop Mix
+        </a>
       </div>
+      <div class="flex justify-between text-xs mt-1 text-gray-300 dark:text-gray-400">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+      <input type="range" id="progressBar" min="0" max="100" value="0"
+             class="w-full mt-1 appearance-none h-1 rounded bg-gray-300 dark:bg-gray-700 accent-green-500">
     </div>
-    
-    <div class="md:hidden">
-      <div class="hamburger" id="mobile-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </nav>
-  
-  <!-- Mobile Menu -->
-  <div class="mobile-menu md:hidden">
-    <div class="flex flex-col p-8 space-y-8">
-      <a href="#about" class="text-xl">About</a>
-      <a href="#work" class="text-xl">Work</a>
-      <a href="#skills" class="text-xl">Skills</a>
-      <a href="#contact" class="text-xl">Contact</a>
-      
-      <div class="flex items-center">
-        <span class="mr-4">Theme</span>
-        <div class="theme-switch" id="mobile-theme-toggle">
-          <div class="switch-handle flex items-center justify-center">
-            <i class="fas fa-sun text-yellow-500 light-icon"></i>
-            <i class="fas fa-moon text-blue-300 dark-icon hidden"></i>
-          </div>
-        </div>
-      </div>
+
+    <!-- Volume -->
+    <div class="flex items-center gap-2">
+      <i class="fas fa-volume-up text-xl"></i>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.05"
+             class="w-24 h-1 bg-gray-300 dark:bg-gray-700 accent-green-500 appearance-none rounded">
     </div>
   </div>
-  
-  <!-- Hero Section -->
-  <section class="hero px-6 md:px-12 relative">
-    <div class="hero-bg"></div>
-    <div class="max-w-6xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div class="space-y-6 md:space-y-8">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            Alex Carrington
-          </h1>
-          <p class="text-xl md:text-2xl opacity-90">
-            "Coding’s just the tool—I’m here to make things work."
-          </p>
-          <p class="text-lg md:text-xl opacity-75">
-            I'm a self-taught developer based in Skåne, Sweden. I create tools, assistants, websites, and systems that solve real problems and actually get used
-          </p>
-          <div class="flex items-center space-x-4">
-            <p class="mt-2 flex items-center gap-2">
-              🇸🇪/🇬🇧 <span>Fluent in Swedish and English</span>
-            </p>            
-          </div>
-          <div class="pt-4">
-            <a href="#contact" class="btn-primary inline-block">Get in touch</a>
-          </div>
-        </div>
-        <div class="hidden md:block">
-          <div class="relative">
-            <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
-              <img src="alex.JPG" alt="Portrait" class="object-cover w-full h-full rounded-xl" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- About Section -->
-  <section id="about" class="py-20 md:py-32 px-6 md:px-12">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold mb-12">About Me</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div class="space-y-6">
-          <p class="text-lg leading-relaxed">
-            I didn’t get into coding because I loved syntax—I got into it because I had ideas I wanted to bring
-            to life. I’m a builder at heart, focused on turning concepts into functional, intuitive products.
-            With experience across AI, machine learning, backend logic, and frontend UI, I enjoy solving real-world 
-            problems and refining features until they just work. Debugging might not be my favorite part—but shipping 
-            something people actually use? That’s what drives me.
-          </p>
-          <div class="flex space-x-4 pt-4">
-            <a href="https://www.linkedin.com/in/alexbouvinkurtti/" class="text-3xl hover:text-blue-500 transition-colors">
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://github.com/Alecarrington23/" class="text-3xl hover:text-blue-500 transition-colors">
-              <i class="fab fa-github"></i>
-            </a>
-          </div>
-        </div>
-        <div class="space-y-6">
-          <div class="flex items-center space-x-4">
-            <i class="fas fa-map-marker-alt text-black-500"></i>
-            <a href="https://www.google.com/maps/place/Skåne,+Sweden" target="_blank">
-              <span>Skåne, Sweden</span>
-            </a>            
-          </div>
-          <div class="flex items-center space-x-4">
-            <i class="fas fa-envelope text-black-500"></i>
-            <a href="mailto:alex@carringtonalex.com"><span>alex@carringtonalex.com</span></a>
-          </div>
-          <div class="flex items-center space-x-4">
-            <i class="fas fa-phone text-black-500"></i>
-            <a href="tel:+46762305919"><span>+46(0)76-230 59 19</span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Work Section -->
-  <section id="work" class="py-20 md:py-32 px-6 md:px-12 bg-opacity-5">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold mb-12">Latest Work</h2>
+</div>
+
+<body data-theme="dark">
+  <div class="custom-cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <header>
+    <div class="container header-container">
+      <div class="logo"><span></span></div>
       
-      <div class="card p-6 md:p-8">
-        <h3 class="text-2xl font-bold mb-4">The Friday Project</h3>
-        <p class="mb-6 text-lg">
-          Developed a custom AI assistant using  Machine Learning and Flask, that handles 
-          TTS, object detection, face recognition, text, calls and more integrated with Google
-          and many other API's for real-time learning, and secured via Cloudflare Tunnel, CSP 
-          headers, rate limits, and isolated user environments and Google OAuth2.0.
-        </p>
+      <nav>
+        <ul>
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#project">Work</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-controls">
+        <div class="theme-toggle">
+          <i class="fas fa-sun"></i>
+        </div>
         
-        <div class="mb-6">
-          <p class="font-medium mb-2">Built with:</p>
-          <div class="flex flex-wrap gap-2">
-            <a href="https://en.wikipedia.org/wiki/Python_(programming_language)" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">Python</a>
-            <a href="https://en.wikipedia.org/wiki/HTML5" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">HTML5</a>
-            <a href="https://en.wikipedia.org/wiki/JavaScript" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JavaScript</a>
-            <a href="https://en.wikipedia.org/wiki/CSS" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">CSS</a>
-            <a href="https://en.wikipedia.org/wiki/JSON" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JSON</a>    
-            <a href="https://en.wikipedia.org/wiki/TensorFlow" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">Tensorflow</a>         
-          </div>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
         </div>
       </div>
-      <div class="card p-6 md:p-8">
-        <h3 class="text-2xl font-bold mb-4">404 Game</h3>
-        <p class="mb-6 text-lg">
-          A small game originally designed to be a fun 404 page with a minigame. Due to API
-          limitations, it became a standalone project. It includes Discord login and a leaderboard 
-          system. Your goal: Survive the Swarm. Integrated with Friday's backend.
+    </div>
+  </header>
+
+  <section id="home" class="hero">
+    <canvas class="three-canvas"></canvas>
+    
+    <div class="container hero-content">
+      <div class="hero-subtitle">Developer / Designer</div>
+      <h1>Hello, I'm Alex Carrington</h1>
+      <p class="hero-tagline">Coding’s just the tool—I’m here to make things work.</p>
+      
+      <div class="hero-cta">
+        <a href="#contact" class="btn">Get in touch</a>
+        <a href="#project" class="btn" style="background: transparent; border: 2px solid var(--accent); color: var(--text-primary);">View my work</a>
+      </div>
+      
+      <div class="language-flags">
+        <span>
         </p>
-        <div class="mb-6">
-          <p class="font-medium mb-2">Built with:</p>
-          <div class="flex flex-wrap gap-2">
-            <a href="https://en.wikipedia.org/wiki/Python_(programming_language)" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">Python</a>
-            <a href="https://en.wikipedia.org/wiki/HTML5" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">HTML5</a>
-            <a href="https://en.wikipedia.org/wiki/JavaScript" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JavaScript</a>
-            <a href="https://en.wikipedia.org/wiki/CSS" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">CSS</a>
-            <a href="https://en.wikipedia.org/wiki/JSON" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JSON</a>            
-          </div>
+        <div class="flex items-center space-x-4">
+          <p class="mt-2 flex items-center gap-2">
+            🇸🇪/🇬🇧 <span>Fluent in Swedish and English</span>
+          </p>   
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-content">
+        
+        <!-- LEFT SIDE: TEXT -->
+        <div class="about-text reveal">
+          <h2>About Me</h2>
+          <p>I didn’t get into coding because I loved syntax—I got into it because I had ideas I wanted to bring to life. I’m a builder at heart, focused on turning concepts into functional, intuitive products.</p>
+          <p>With experience across AI, machine learning, backend logic, and frontend UI, I enjoy solving real-world problems and refining features until they just work. Debugging might not be my favorite part—but shipping something people actually use? That’s what drives me.</p>
         </div>
+  
+        <!-- RIGHT SIDE: IMAGE -->
+        <div class="about-image reveal">
+          <img src="alex.JPG" alt="Portrait" class="w-full h-auto rounded-xl" />
+        </div>
+  
       </div>
     </div>
   </section>
   
-<!-- Skills Section -->
-<section id="skills" class="py-20 md:py-32 px-6 md:px-12">
+
+<!-- Work Section -->
+<section id="work" class="py-20 md:py-32 px-6 md:px-12 bg-opacity-5">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-bold mb-12">Skills</h2>
+    <h2 class="text-3xl md:text-4xl font-bold mb-12">Latest Work</h2>
 
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold mb-8">Languages I Know</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-        <!-- Languages -->
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-js text-4xl mb-4 text-yellow-500"></i>
-          <span class="font-medium">JavaScript</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-python text-4xl mb-4 text-blue-500"></i>
-          <span class="font-medium">Python</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-html5 text-4xl mb-4 text-orange-500"></i>
-          <span class="font-medium">HTML5</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-code text-4xl mb-4 text-purple-500"></i>
-          <span class="font-medium">C++</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-hashtag text-4xl mb-4 text-green-500"></i>
-          <span class="font-medium">C#</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-node-js text-4xl mb-4 text-green-600"></i>
-          <span class="font-medium">Node.js</span>
+    <!-- Project: The Friday Project -->
+    <div class="card p-6 md:p-8">
+      <h3 class="text-2xl font-bold mb-4">The Friday Project</h3>
+      <p class="mb-6 text-lg">
+        A weekend passion project where I explored new technologies and created something useful.
+        This project combines modern frontend techniques with powerful backend solutions to deliver
+        a seamless user experience. It evolved into a custom AI assistant that uses Flask and
+        machine learning to handle TTS, object/face detection, text & voice input, Discord/iMessage
+        alerts, and real-time learning—secured with Cloudflare Tunnel, CSP headers, rate limiting,
+        and OAuth2.
+      </p>
+
+      <div class="mb-6">
+        <p class="font-medium mb-2">Built with:</p>
+        <div class="flex flex-wrap gap-2">
+          <a href="https://en.wikipedia.org/wiki/Python_(programming_language)" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">Python</a>
+          <a href="https://en.wikipedia.org/wiki/HTML5" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">HTML5</a>
+          <a href="https://en.wikipedia.org/wiki/JavaScript" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JavaScript</a>
+          <a href="https://en.wikipedia.org/wiki/CSS" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">CSS</a>
+          <a href="https://en.wikipedia.org/wiki/JSON" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JSON</a>
+          <a href="https://en.wikipedia.org/wiki/TensorFlow" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">TensorFlow</a>
         </div>
       </div>
     </div>
 
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold mb-8">Tools & Platforms I Use</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-        <!-- Tools -->
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-aws text-4xl mb-4 text-orange-400"></i>
-          <span class="font-medium">Amazon Web Services</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-robot text-4xl mb-4 text-blue-400"></i>
-          <span class="font-medium">Google Cloud</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-microsoft text-4xl mb-4 text-blue-500"></i>
-          <span class="font-medium">Microsoft Azure</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold mb-8">OS & System Knowledge</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-        <!-- OS & System -->
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-apple text-4xl mb-4 text-gray-700"></i>
-          <span class="font-medium">macOS</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-windows text-4xl mb-4 text-blue-600"></i>
-          <span class="font-medium">Windows</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-linux text-4xl mb-4 text-yellow-600"></i>
-          <span class="font-medium">Ubuntu/Linux</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fab fa-github text-4xl mb-4 text-purple-700"></i>
-          <span class="font-medium">GitHub</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-terminal text-4xl mb-4 text-green-700"></i>
-          <span class="font-medium">SSH</span>
-        </div>
-        <div class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-desktop text-4xl mb-4 text-indigo-600"></i>
-          <span class="font-medium">RDP</span>
-        </div>
-      </div>
-    </div>
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold mb-8">Networking & Infrastructure</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-        <!-- Networking & Infrastructure -->
-        <a href="Network.html" class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-project-diagram text-4xl mb-4 text-blue-500"></i>
-          <span class="font-medium">Network Design & Segmentation</span>
-        </a>
-    
-        <a href="Network.html" class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-server text-4xl mb-4 text-blue-600"></i>
-          <span class="font-medium">Server Configuration & Rackmount Integration</span>
-        </a>
-    
-        <a href="Network.html" class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-sync-alt text-4xl mb-4 text-yellow-600"></i>
-          <span class="font-medium">Redundancy Planning (UPS & Failover)</span>
-        </a>
-    
-        <a href="Network.html" class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-microchip text-4xl mb-4 text-purple-700"></i>
-          <span class="font-medium">Hardware for Virtualization & NAS</span>
-        </a>
-    
-        <a href="Network.html" class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-network-wired text-4xl mb-4 text-gray-700"></i>
-          <span class="font-medium">Microsoft Group Policy & Workgroup</span>
-        </a>
-    
-        <a href="Network.html" class="skill-card p-6 flex flex-col items-center text-center">
-          <i class="fas fa-tools text-4xl mb-4 text-green-700"></i>
-          <span class="font-medium text-center">Monitoring, Scalability & Future-Proofing</span>
-          <span class="font-medium text-center">Power Budgeting & Load Distribution</span>
-        </a>
+    <!-- Project: 404 Game -->
+    <div class="card p-6 md:p-8">
+      <h3 class="text-2xl font-bold mb-4">404 Game</h3>
+      <p class="mb-6 text-lg">
+        A small game originally designed to be a fun 404 page with a minigame. Due to API
+        limitations, it became a standalone project. It includes Discord login and a leaderboard
+        system. Your goal: Survive the Swarm. Integrated with Friday's backend.
+      </p>
+      <div class="mb-6">
+        <p class="font-medium mb-2">Built with:</p>
+        <div class="flex flex-wrap gap-2">
+          <a href="https://en.wikipedia.org/wiki/Python_(programming_language)" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">Python</a>
+          <a href="https://en.wikipedia.org/wiki/HTML5" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">HTML5</a>
+          <a href="https://en.wikipedia.org/wiki/JavaScript" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JavaScript</a>
+          <a href="https://en.wikipedia.org/wiki/CSS" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">CSS</a>
+          <a href="https://en.wikipedia.org/wiki/JSON" class="px-3 py-1 bg-blue-500 bg-opacity-10 text-blue-500 rounded-full">JSON</a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
+  <section id="skills" class="skills">
+    <div class="container">
+      <h2 class="skills-title reveal">My Skills</h2>
   
-  <!-- Contact Section -->
-  <section id="contact" class="py-20 md:py-32 px-6 md:px-12">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold mb-12">Get In Touch</h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div class="space-y-6">
-          <p class="text-lg">
-            Interested in working together? Have a project in mind or just want to connect?
-            Feel free to reach out through any of the channels below.
-          </p>
-          
-          <div class="flex items-center space-x-4">
-            <i class="fas fa-envelope text-black-500 text-xl"></i>
-            <a href="mailto:alex@carringtonalex.com" class="hover:text-blue-500 transition-colors">alex@carringtonalex.com</a>
-          </div>
-          
-          <div class="flex items-center space-x-4">
-            <i class="fas fa-phone text-black-500 text-xl"></i>
-            <a href="tel:+46701234567" class="hover:text-blue-500 transition-colors">+46(0)76-230 59 19</a>
-          </div>
-          
-          <div class="flex items-center space-x-4">
-            <i class="fab fa-linkedin text-black-500 text-xl"></i>
-            <a href="#" class="hover:text-blue-500 transition-colors">LinkedIn</a>
-          </div>
-          
-          <div class="flex items-center space-x-4">
-            <i class="fab fa-github text-black-500 text-xl"></i>
-            <a href="#" class="hover:text-blue-500 transition-colors">GitHub</a>
-          </div>
+      <h3 class="reveal">Languages I Know</h3>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <i class="fab fa-js skill-icon text-yellow-500"></i>
+          <div class="skill-name">JavaScript</div>
         </div>
-        
-        <form id="contactForm" class="space-y-6">
-          <div>
-            <label class="block mb-2 font-medium">Name</label>
-            <input type="text" name="name" required
-                   class="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-        
-          <div>
-            <label class="block mb-2 font-medium">Email</label>
-            <input type="email" name="email" required
-                   class="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-        
-          <div>
-            <label class="block mb-2 font-medium">Message</label>
-            <textarea rows="4" name="message" required
-                      class="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-          </div>
-        
-          <button type="submit" class="btn-primary">Send Message</button>
-        </form>        
+        <div class="skill-card reveal">
+          <i class="fab fa-python skill-icon text-blue-500"></i>
+          <div class="skill-name">Python</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fab fa-html5 skill-icon text-orange-500"></i>
+          <div class="skill-name">HTML5</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fas fa-code skill-icon text-purple-500"></i>
+          <div class="skill-name">C++</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fas fa-hashtag skill-icon text-green-500"></i>
+          <div class="skill-name">C#</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fab fa-node-js skill-icon text-green-600"></i>
+          <div class="skill-name">Node.js</div>
+        </div>
+      </div>
+  
+      <h3 class="reveal">Tools & Platforms I Use</h3>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <i class="fab fa-aws skill-icon text-orange-400"></i>
+          <div class="skill-name">Amazon Web Services</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fas fa-robot skill-icon text-blue-400"></i>
+          <div class="skill-name">Google Cloud</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fab fa-microsoft skill-icon text-blue-500"></i>
+          <div class="skill-name">Microsoft Azure</div>
+        </div>
+      </div>
+  
+      <h3 class="reveal">OS & System Knowledge</h3>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <i class="fab fa-apple skill-icon text-gray-700"></i>
+          <div class="skill-name">macOS</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fab fa-windows skill-icon text-blue-600"></i>
+          <div class="skill-name">Windows</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fab fa-linux skill-icon text-yellow-600"></i>
+          <div class="skill-name">Ubuntu/Linux</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fab fa-github skill-icon text-purple-700"></i>
+          <div class="skill-name">GitHub</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fas fa-terminal skill-icon text-green-700"></i>
+          <div class="skill-name">SSH</div>
+        </div>
+        <div class="skill-card reveal">
+          <i class="fas fa-desktop skill-icon text-indigo-600"></i>
+          <div class="skill-name">RDP</div>
+        </div>
+      </div>
+  
+      <h3 class="reveal">Networking & Infrastructure</h3>
+      <div class="skills-grid">
+        <a href="Network.html" class="skill-card reveal">
+          <i class="fas fa-project-diagram skill-icon text-blue-500"></i>
+          <div class="skill-name">Network Design & Segmentation</div>
+        </a>
+        <a href="Network.html" class="skill-card reveal">
+          <i class="fas fa-server skill-icon text-blue-600"></i>
+          <div class="skill-name">Server Configuration & Rackmount Integration</div>
+        </a>
+        <a href="Network.html" class="skill-card reveal">
+          <i class="fas fa-sync-alt skill-icon text-yellow-600"></i>
+          <div class="skill-name">Redundancy Planning (UPS & Failover)</div>
+        </a>
+        <a href="Network.html" class="skill-card reveal">
+          <i class="fas fa-microchip skill-icon text-purple-700"></i>
+          <div class="skill-name">Hardware for Virtualization & NAS</div>
+        </a>
+        <a href="Network.html" class="skill-card reveal">
+          <i class="fas fa-network-wired skill-icon text-gray-700"></i>
+          <div class="skill-name">Microsoft Group Policy & Workgroup</div>
+        </a>
+        <a href="Network.html" class="skill-card reveal">
+          <i class="fas fa-tools skill-icon text-green-700"></i>
+          <div class="skill-name text-center">Monitoring, Scalability & Future-Proofing<br>Power Budgeting & Load Distribution</div>
+        </a>
       </div>
     </div>
   </section>
   
-  <!-- Footer -->
-  <footer class="py-12 px-6 md:px-12">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="flex items-center space-x-4 mb-6 md:mb-0">
-          <span class="font-medium">Alex Carrington</span>
-        </div>
-        
-        <div class="flex items-center">
-          <div class="text-sm opacity-75">
-            Hosted by Cloudflare. Uptime monitored by 
-            <a href="https://stats.uptimerobot.com/xfk3nzvf3q" class="text-blue-500 hover:underline">Uptimerobot</a>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="reveal">Get In Touch</h2>
+      
+      <div class="contact-wrapper">
+        <div class="contact-info reveal">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-text">
+              <h4>Location</h4>
+              <p>Skåne, Sweden</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-text">
+              <h4>Email</h4>
+              <p>alex@carringtonalex.com</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-text">
+              <h4>Phone</h4>
+              <p>+46(0)76-230 59 19</p>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/alexbouvinkurtti/" class="social-link">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/Alecarrington23/" class="social-link">
+              <i class="fab fa-github"></i>
+            </a>
           </div>
         </div>
-      </div>
-      
-      <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
-        <div class="text-sm opacity-75 text-center">
-          © 2025 Carrington, Alex. All rights reserved.
+        
+        <div class="contact-form reveal">
+          <form id="contactForm">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Your Name" required>
+            </div>
+            
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Your Email" required>
+            </div>
+            
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Subject">
+            </div>
+            
+            <div class="form-group">
+              <textarea class="form-control" placeholder="Your Message" rows="5" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+          </form>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <audio id="bg-music" autoplay loop>
+    <source src="background.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  
+  <script>
+    const bgMusic = document.getElementById('bg-music');
+  
+    // Wait for user interaction to allow audio (for mobile browsers)
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set ultra-low volume
+      bgMusic.volume = 0.05;
+    });
+  
+    // Unmute on first user interaction (required for autoplay on mobile)
+    window.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play().catch(() => {});
+      }
+    }, { once: true });
+  </script>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo"><span style="color: var(--accent);"></span></div>
+        
+        <div class="footer-links">
+          <a href="#home" class="footer-link">Home</a>
+          <a href="#about" class="footer-link">About</a>
+          <a href="#project" class="footer-link">Project</a>
+          <a href="#skills" class="footer-link">Skills</a>
+          <a href="#contact" class="footer-link">Contact</a>
+        </div>
+        
+        <div class="footer-credits">
+          Hosted by Cloudflare. Uptime monitored by <a href="https://stats.uptimerobot.com/xfk3nzvf3q" target="_blank">Uptimerobot</a>
+        </div>
+        
+        <p style="margin-top: 1rem; font-size: 0.9rem;">© 2025 Alex Carrington. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize GSAP
+    // Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const body = document.body;
+    
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      body.setAttribute('data-theme', newTheme);
+      themeIcon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+      
+      // Animate the transition
+      body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
+      setTimeout(() => {
+        body.style.transition = '';
+      }, 500);
+    });
+
+    // Mobile Navigation
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('nav ul');
+    const navLinks = document.querySelectorAll('nav ul li a');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+
+    // Scroll Animation
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize GSAP ScrollTrigger
       gsap.registerPlugin(ScrollTrigger);
       
-      // Initialize dark/light mode from local storage if available
-      const storedTheme = localStorage.getItem('theme');
-      if (storedTheme) {
-        document.body.className = storedTheme === 'dark' ? 'dark-mode' : 'light-mode';
-        updateThemeIcons(storedTheme === 'dark');
-      }
-
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      const newColorScheme = e.matches ? 'dark' : 'light';
-        document.body.className = newColorScheme === 'dark' ? 'dark-mode' : 'light-mode';
-        localStorage.setItem('theme', newColorScheme);
-        updateThemeIcons(newColorScheme === 'dark');
-      });
-
-      
-      // Theme toggle functionality
-      const themeToggle = document.getElementById('theme-toggle');
-      const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
-      
-      function toggleTheme() {
-        const isDark = document.body.classList.contains('dark-mode');
-        document.body.className = isDark ? 'light-mode' : 'dark-mode';
-        localStorage.setItem('theme', isDark ? 'light' : 'dark');
-        updateThemeIcons(!isDark);
-      }
-      
-      function updateThemeIcons(isDark) {
-        const lightIcons = document.querySelectorAll('.light-icon');
-        const darkIcons = document.querySelectorAll('.dark-icon');
-        
-        lightIcons.forEach(icon => {
-          icon.classList.toggle('hidden', isDark);
-        });
-        
-        darkIcons.forEach(icon => {
-          icon.classList.toggle('hidden', !isDark);
-        });
-      }
-      
-      themeToggle.addEventListener('click', toggleTheme);
-      mobileThemeToggle.addEventListener('click', toggleTheme);
-      
-      // Mobile menu functionality
-      const mobileToggle = document.getElementById('mobile-toggle');
-      const mobileMenu = document.querySelector('.mobile-menu');
-      
-      mobileToggle.addEventListener('click', function() {
-        mobileMenu.classList.toggle('active');
-        mobileToggle.classList.toggle('active');
-      });
-      
-      // Close mobile menu when clicking on a link
-      document.querySelectorAll('.mobile-menu a').forEach(link => {
-        link.addEventListener('click', function() {
-          mobileMenu.classList.remove('active');
-          mobileToggle.classList.remove('active');
-        });
-      });
-      
-      // Scroll animations
-      const sections = document.querySelectorAll('section');
-      
-      sections.forEach(section => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top 80%',
-          onEnter: () => section.classList.add('visible')
-        });
-      });
-      
-      // Animate hero elements
-      gsap.from('.hero h1', {
-        opacity: 0,
-        y: 50,
-        duration: 1,
+      // Hero animations
+      gsap.to('.hero-subtitle', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
         delay: 0.2
       });
-      
-      gsap.from('.hero p', {
-        opacity: 0,
-        y: 30,
-        duration: 1,
+
+      gsap.to('.hero h1', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
         delay: 0.4
       });
-      
-      gsap.from('.hero .btn-primary', {
-        opacity: 0,
-        y: 20,
-        duration: 1,
+
+      gsap.to('.hero-tagline', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
         delay: 0.6
       });
-      
-      // Skill cards animation
-      gsap.utils.toArray('.skill-card').forEach((card, i) => {
-        gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 90%'
-          },
-          opacity: 0,
-          y: 30,
-          duration: 0.6,
-          delay: i * 0.1
-        });
+
+      gsap.to('.hero-cta', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        delay: 0.8
       });
+
+      gsap.to('.language-flags', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        delay: 1
+      });
+
+      // Reveal animations on scroll
+      const revealElements = document.querySelectorAll('.reveal');
       
-      // Smooth scroll for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const targetId = this.getAttribute('href');
-          const targetElement = document.querySelector(targetId);
-          
-          if (targetElement) {
-            window.scrollTo({
-              top: targetElement.offsetTop - 100,
-              behavior: 'smooth'
-            });
+      revealElements.forEach((element) => {
+        gsap.fromTo(element, 
+          {
+            y: 50,
+            opacity: 0
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            scrollTrigger: {
+              trigger: element,
+              start: 'top 80%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+
+      // Skill progress animations
+      const skillProgress = document.querySelectorAll('.skill-progress');
+      
+      skillProgress.forEach((progress) => {
+        const width = progress.getAttribute('data-width');
+        
+        gsap.to(progress, {
+          width: width,
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: progress,
+            start: 'top 90%',
+            toggleActions: 'play none none none'
           }
         });
       });
-    });
-  </script>
-  <script>
-    document.getElementById("contactForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-  
-      const form = e.target;
-      const data = {
-        name: form.name.value,
-        email: form.email.value,
-        message: form.message.value
-      };
-  
-      const res = await fetch("/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+
+      // Header scroll effect
+      const header = document.querySelector('header');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
       });
-  
-      if (res.ok) {
-        alert("✅ Message sent! Thanks for reaching out.");
-        form.reset();
-      } else {
-        alert("❌ Something went wrong. Please try again.");
-      }
     });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 70,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Active navigation on scroll
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('nav ul li a');
+      
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (window.scrollY >= (sectionTop - 100)) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Custom cursor
+    const cursor = document.querySelector('.custom-cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
+    
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      
+      setTimeout(() => {
+        cursorFollower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      }, 100);
+    });
+
+    document.addEventListener('mousedown', () => {
+      cursor.style.transform += ' scale(0.7)';
+      cursorFollower.style.transform += ' scale(0.7)';
+    });
+
+    document.addEventListener('mouseup', () => {
+      cursor.style.transform = cursor.style.transform.replace(' scale(0.7)', '');
+      cursorFollower.style.transform = cursorFollower.style.transform.replace(' scale(0.7)', '');
+    });
+
+    // Hover effect for links and buttons
+    const hoverTargets = document.querySelectorAll('a, button, .theme-toggle, .skill-card');
+    
+    hoverTargets.forEach(target => {
+      target.addEventListener('mouseenter', () => {
+        cursorFollower.style.width = '60px';
+        cursorFollower.style.height = '60px';
+        cursorFollower.style.borderColor = 'var(--accent)';
+      });
+      
+      target.addEventListener('mouseleave', () => {
+        cursorFollower.style.width = '40px';
+        cursorFollower.style.height = '40px';
+        cursorFollower.style.borderColor = 'var(--accent)';
+      });
+    });
+
+    // Three.js Background Animation
+    function initThreeJS() {
+      const canvas = document.querySelector('.three-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      
+      // Create particles
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particlesCount = 1500;
+      
+      const posArray = new Float32Array(particlesCount * 3);
+      
+      for (let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 10;
+      }
+      
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      
+      // Create material
+      const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.03,
+        color: document.body.getAttribute('data-theme') === 'light' ? 0x0070f3 : 0x00a1ff
+      });
+      
+      // Create mesh
+      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+      scene.add(particlesMesh);
+      
+      // Camera position
+      camera.position.z = 4;
+      
+      // Mouse movement
+      let mouseX = 0;
+      let mouseY = 0;
+      
+      function onDocumentMouseMove(event) {
+        mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+      }
+      
+      document.addEventListener('mousemove', onDocumentMouseMove);
+      
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+      
+      // Theme change event
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        particlesMaterial.color.set(currentTheme === 'dark' ? 0x0070f3 : 0x00a1ff);
+      });
+      
+      // Animation loop
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        particlesMesh.rotation.x += 0.0005;
+        particlesMesh.rotation.y += 0.0005;
+        
+        // Mouse interaction
+        particlesMesh.rotation.x += mouseY * 0.0005;
+        particlesMesh.rotation.y += mouseX * 0.0005;
+        
+        renderer.render(scene, camera);
+      }
+      
+      animate();
+    }
+    
+    // Initialize ThreeJS
+    window.addEventListener('load', initThreeJS);
+    
+    // Form submission (prevent default)
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Form submission is disabled in this demo. In a real website, this would send your message.');
+      });
+    }
+
+    const music = document.getElementById('bg-music');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const playPauseIcon = document.getElementById('playPauseIcon');
+const progressBar = document.getElementById('progressBar');
+const volumeSlider = document.getElementById('volumeSlider');
+const currentTimeEl = document.getElementById('currentTime');
+const durationEl = document.getElementById('duration');
+
+// Convert seconds to mm:ss
+function formatTime(seconds) {
+  const min = Math.floor(seconds / 60);
+  const sec = Math.floor(seconds % 60);
+  return `${min}:${sec.toString().padStart(2, '0')}`;
+}
+
+// Update progress
+music.addEventListener('timeupdate', () => {
+  progressBar.value = (music.currentTime / music.duration) * 100 || 0;
+  currentTimeEl.textContent = formatTime(music.currentTime);
+  durationEl.textContent = formatTime(music.duration);
+});
+
+// Seek
+progressBar.addEventListener('input', () => {
+  music.currentTime = (progressBar.value / 100) * music.duration;
+});
+
+// Play/Pause
+playPauseBtn.addEventListener('click', () => {
+  if (music.paused) {
+    music.play();
+    playPauseIcon.className = 'fas fa-pause';
+  } else {
+    music.pause();
+    playPauseIcon.className = 'fas fa-play';
+  }
+});
+
+// Volume
+volumeSlider.addEventListener('input', () => {
+  music.volume = volumeSlider.value;
+});
+
+// Set initial volume
+music.volume = volumeSlider.value;
+
   </script>
 </body>
 </html>
