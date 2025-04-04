@@ -730,39 +730,6 @@
     }
   </style>
 </head>
-<!-- Music Player Bar -->
-<div id="music-bar" class="fixed bottom-0 left-0 w-full backdrop-blur-md bg-black/40 dark:bg-white/10 text-white dark:text-white px-6 py-3 z-50">
-  <div class="flex items-center justify-between max-w-5xl mx-auto">
-    
-    <!-- Play/Pause Button -->
-    <button id="playPauseBtn" class="text-2xl">
-      <i id="playPauseIcon" class="fas fa-pause"></i>
-    </button>
-
-    <!-- Title and Timestamps -->
-    <div class="flex-1 px-6 text-center">
-      <div class="text-sm font-semibold text-white dark:text-white">
-        <a href="https://www.youtube.com/watch?v=pxPWEudVo3M&t=22s" target="_blank" rel="noopener noreferrer" class="font-bold hover:underline">
-          No Copyright Music Playlist - 20 Minutes Lofi Hip Hop Mix
-        </a>
-      </div>
-      <div class="flex justify-between text-xs mt-1 text-gray-300 dark:text-gray-400">
-        <span id="currentTime">0:00</span>
-        <span id="duration">0:00</span>
-      </div>
-      <input type="range" id="progressBar" min="0" max="100" value="0"
-             class="w-full mt-1 appearance-none h-1 rounded bg-gray-300 dark:bg-gray-700 accent-green-500">
-    </div>
-
-    <!-- Volume -->
-    <div class="flex items-center gap-2">
-      <i class="fas fa-volume-up text-xl"></i>
-      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.05"
-             class="w-24 h-1 bg-gray-300 dark:bg-gray-700 accent-green-500 appearance-none rounded">
-    </div>
-  </div>
-</div>
-
 <body data-theme="dark">
   <div class="custom-cursor"></div>
   <div class="cursor-follower"></div>
@@ -795,6 +762,37 @@
     </div>
   </header>
 
+  <!-- Music Player Bar -->
+<div id="music-bar" class="fixed bottom-0 left-0 w-full backdrop-blur-md bg-black/40 dark:bg-white/10 text-white dark:text-white px-6 py-3 z-50">
+  <div class="flex items-center justify-between max-w-5xl mx-auto">
+    
+    <!-- Play/Pause Button -->
+    <button id="playPauseBtn" class="text-2xl">
+      <i id="playPauseIcon" class="fas fa-pause"></i>
+    </button>
+
+    <!-- Title and Timestamps -->
+    <div class="flex-1 px-6 text-center">
+      <div class="text-sm font-semibold text-white dark:text-white">
+        <a href="https://www.youtube.com/watch?v=pxPWEudVo3M&t=22s" target="_blank" rel="noopener noreferrer" class="font-bold hover:underline">
+          No Copyright Music Playlist - 20 Minutes Lofi Hip Hop Mix
+        </a>
+      </div>
+      <div class="flex justify-between text-xs mt-1 text-gray-300 dark:text-gray-400">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+      <input type="range" id="progressBar" min="0" max="100" value="0"
+             class="w-full mt-1 appearance-none h-1 rounded bg-gray-300 dark:bg-gray-700 accent-green-500">
+    </div>
+
+    <!-- Volume -->
+    <div class="flex items-center gap-2">
+      <i class="fas fa-volume-up text-xl"></i>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.05"
+             class="w-24 h-1 bg-gray-300 dark:bg-gray-700 accent-green-500 appearance-none rounded">
+    </div>
+  </div>
   <section id="home" class="hero">
     <canvas class="three-canvas"></canvas>
     
